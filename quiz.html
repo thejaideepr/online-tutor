@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuturePrep JavaScript Quiz Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        .options button {
+            display: block;
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        .options button:hover {
+            background-color: #ddd;
+        }
+
+        .options button.correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .options button.wrong {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .result {
+            font-size: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .next-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .next-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>JavaScript Quiz - FuturePrep</h1>
+    </div>
+
+    <div class="content">
+        <div class="quiz-container" id="quizContainer">
+            <!-- Quiz questions will be dynamically inserted here -->
+        </div>
+        <button class="next-button" id="nextButton" onclick="nextQuestion()" disabled>Next Question</button>
+    </div>
+
+    <script>
+        // Quiz Data
+        const quizData = [
+            { question: "What is JavaScript primarily used for?", options: ["Server-side scripting", "Web development", "Game development", "Operating system design"], answer: 1 },
+            { question: "Which company developed JavaScript?", options: ["Microsoft", "Mozilla", "Netscape", "Google"], answer: 2 },
+            { question: "Which of the following is not a JavaScript data type?", options: ["String", "Boolean", "Integer", "Undefined"], answer: 2 },
+            { question: "Which symbol is used for comments in JavaScript?", options: ["//", "/*", "#", "<!--"], answer: 0 },
+            { question: "How do you declare a JavaScript variable?", options: ["var carName;", "variable carName;", "v carName;", "declare carName;"], answer: 0 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        const totalQuestions = quizData.length;
+
+        // Function to load the current question
+        function loadQuestion() {
+            const quizContainer = document.getElementById('quizContainer');
+            const questionData = quizData[currentQuestion];
+
+            quizContainer.innerHTML = `
+                <div class="question">${questionData.question}</div>
+                <div class="options">
+                    ${questionData.options.map((option, index) => `
+                        <button onclick="checkAnswer(${index})">${option}</button>
+                    `).join('')}
+                </div>
+                <div class="result" id="result"></div>
+            `;
+
+            // Disable "Next Question" button initially
+            document.getElementById('nextButton').disabled = true;
+        }
+
+        // Function to check the selected answer
+        function checkAnswer(selectedOption) {
+            const resultElement = document.getElementById('result');
+            const buttons = document.querySelectorAll('.options button');
+            const correctAnswer = quizData[currentQuestion].answer;
+
+            if (selectedOption === correctAnswer) {
+                resultElement.textContent = 'Correct!';
+                resultElement.style.color = 'green';
+                buttons[selectedOption].classList.add('correct');
+                score++;
+            } else {
+                resultElement.textContent = 'Wrong! The correct answer was: ' + quizData[currentQuestion].options[correctAnswer];
+                resultElement.style.color = 'red';
+                buttons[selectedOption].classList.add('wrong');
+                buttons[correctAnswer].classList.add('correct');
+            }
+
+            // Disable all buttons once answered
+            buttons.forEach(button => button.disabled = true);
+
+            // Enable the "Next Question" button after selecting an answer
+            document.getElementById('nextButton').disabled = false;
+        }
+
+        // Function to load the next question
+        function nextQuestion() {
+            currentQuestion++;
+
+            // If there are more questions, load the next one
+            if (currentQuestion < totalQuestions) {
+                loadQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        // Function to display the final score
+        function showFinalScore() {
+            const quizContainer = document.getElementById('quizContainer');
+            quizContainer.innerHTML = `
+                <h2>Quiz Completed!</h2>
+                <p>Your final score is: ${score} out of ${totalQuestions}</p>
+            `;
+
+            // Hide the "Next Question" button
+            document.getElementById('nextButton').style.display = 'none';
+        }
+
+        // Initial load of the first question
+        loadQuestion();
+    </script>
+</body>
+</html>

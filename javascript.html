@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Online Tutoring Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            padding: 15px;
+            color: white;
+            height: 100vh;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            border-bottom: 1px solid #555;
+        }
+        .sidebar a:hover {
+            background-color: #555;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+        }
+        h2 {
+            color: #333;
+        }
+        .definition {
+            background-color: #f1f1f1;
+            padding: 10px;
+            background-color: #333;
+            border-left: 5px solid;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .code {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Learn JavaScript - Online Tutoring Platform</h1>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <a href="#" onclick="showLesson(1)">Lesson 1: Variables</a>
+            <a href="#" onclick="showLesson(2)">Lesson 2: Functions</a>
+            <a href="#" onclick="showLesson(3)">Lesson 3: Loops</a>
+            <a href="#" onclick="showLesson(4)">Lesson 4: Arrays</a>
+            <a href="#" onclick="showLesson(5)">Lesson 5: Objects</a>
+            <a href="#" onclick="showLesson(6)">Lesson 6: ES6 Features</a>
+            <a href="#" onclick="showLesson(7)">Lesson 7: Promises</a>
+            <a href="#" onclick="showLesson(8)">Lesson 8: DOM Manipulation</a>
+            <a href="#" onclick="showLesson(9)">Lesson 9: Async/Await</a>
+        </div>
+
+        <div class="content" id="lesson-content">
+            <!-- Lesson content will be loaded here -->
+            <h2>Welcome to JavaScript Tutoring Platform</h2>
+            <p>Select a lesson from the sidebar to start learning!</p>
+        </div>
+    </div>
+
+    <script>
+        const lessons = {
+            1: {
+                title: 'Lesson 1: Variables',
+                definition: 'A variable is a container for storing data values.',
+                code: `let message = "Hello, World!";\nconsole.log(message);`
+            },
+            2: {
+                title: 'Lesson 2: Functions',
+                definition: 'A function is a block of code designed to perform a particular task.',
+                code: `function greet(name) {\n    return "Hello, " + name + "!";\n}\nconsole.log(greet("John"));`
+            },
+            3: {
+                title: 'Lesson 3: Loops',
+                definition: 'Loops are used to repeat a block of code as long as a certain condition is true.',
+                code: `for (let i = 0; i < 5; i++) {\n    console.log(i);\n}`
+            },
+            4: {
+                title: 'Lesson 4: Arrays',
+                definition: 'An array is a special variable, which can hold more than one value at a time.',
+                code: `let fruits = ["Apple", "Banana", "Cherry"];\nconsole.log(fruits[0]);`
+            },
+            5: {
+                title: 'Lesson 5: Objects',
+                definition: 'An object is a collection of properties, and a property is an association between a name and a value.',
+                code: `let person = {\n    name: "John",\n    age: 30,\n    city: "New York"\n};\nconsole.log(person.name);`
+            },
+            6: {
+                title: 'Lesson 6: ES6 Features',
+                definition: 'ES6 introduced new features like let/const, arrow functions, template literals, and more.',
+                code: `const multiply = (a, b) => a * b;\nlet result = multiply(2, 3);\nconsole.log(result);`
+            },
+            7: {
+                title: 'Lesson 7: Promises',
+                definition: 'Promises are used to handle asynchronous operations in JavaScript.',
+                code: `let promise = new Promise(function(resolve, reject) {\n    resolve("Promise fulfilled");\n});\npromise.then(function(value) {\n    console.log(value);\n});`
+            },
+            8: {
+                title: 'Lesson 8: DOM Manipulation',
+                definition: 'DOM manipulation allows you to change HTML elements dynamically using JavaScript.',
+                code: `document.getElementById("demo").innerHTML = "Hello JavaScript!";`
+            },
+            9: {
+                title: 'Lesson 9: Async/Await',
+                definition: 'Async/Await simplifies the handling of promises, making asynchronous code look synchronous.',
+                code: `async function fetchData() {\n    let response = await fetch('https://api.example.com/data');\n    let data = await response.json();\n    console.log(data);\n}\nfetchData();`
+            }
+        };
+
+        function showLesson(lessonNumber) {
+            const lesson = lessons[lessonNumber];
+            const content = document.getElementById('lesson-content');
+            
+            content.innerHTML = `
+                <h2>${lesson.title}</h2>
+                <div class="definition">${lesson.definition}</div>
+                <div class="code">${lesson.code}</div>
+            `;
+        }
+    </script>
+
+</body>
+</html>
